@@ -7,7 +7,7 @@
 #include<ctime>
 #include<climits>
 
-#define SIZE 50
+#define SIZE 100
 #define UP 0
 #define DOWN 1
 #define SPACE 2
@@ -61,6 +61,19 @@ int main() {
     //string* text = new string[line];
     ////string text[line];//메뉴 저장할 배열
 
+    cout << endl;
+    cout << "   ※메뉴 랜덤 프로그램※" << endl;
+    cout << endl;
+    cout << "▒▒▒▒▒▒▒▒▒▒▒▒▒▒" << endl;
+    cout << "▒                        ▒" << endl;
+    cout << "▒     ▶  Start!  ◀     ▒" << endl;
+    cout << "▒                        ▒" << endl;
+    cout << "▒▒▒▒▒▒▒▒▒▒▒▒▒▒" << endl;
+    if (cin.get() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+    system("cls");
 
     string text[SIZE];//메뉴 저장할 배열
     int num = text_stor(text);//메모장에 저장되어있는 개수
@@ -177,7 +190,7 @@ void gotoxy(int x, int y) {
 int menu() {
     system("cls");
 
-    cout << "목록을 선택하세요." << endl;
+    cout << "※목록을 선택하세요." << endl;
     cout << "> 1. 메뉴 랜덤 선택" << endl;
     cout << "  2. 메뉴 수정" << endl;
     cout << "  3. 종료" << endl;
@@ -253,9 +266,33 @@ void menu_random(string* text, int num) {//메뉴 선택해주는 함수
     int food_menu = rand() % (num);
     //cout << num << endl;
     //cout << food_menu << endl;
-    cout << "=================" << endl;
-    cout << "오늘의 메뉴는!!" << text[food_menu] << "입니다~~" << endl;
-    cout << "=================" << endl;
+
+    cout << "    ＊" << endl;
+    cout << "   ＊＊" << endl;
+    cout << "  ＊＊＊" << endl;
+    cout << " ＊＊＊＊" << endl;
+    cout << "＊＊＊＊＊" << endl;
+    Sleep(700);
+    gotoxy(0, 0);
+    cout << "    ※";
+    Sleep(700);
+    gotoxy(0, 1);
+    cout << "   ※※";
+    Sleep(700);
+    gotoxy(0, 2);
+    cout << "  ※※※";
+    Sleep(700);
+    gotoxy(0, 3);
+    cout << " ※※※※";
+    Sleep(700);
+    gotoxy(0, 4);
+    cout << "※※※※※";
+    Sleep(1000);
+
+    cout << endl;
+    cout << endl;
+    cout << "오늘의 메뉴는!!" << text[food_menu] << "입니다~~!!!!!!" << endl;
+    cout << endl;
     cout << "Press Enter key" << endl;
     if (cin.get() != '\n') {
         cin.clear();
@@ -266,7 +303,7 @@ void menu_random(string* text, int num) {//메뉴 선택해주는 함수
 }
 
 void menu_change(string* text) {//메뉴 수정하는 함수
-    system("cls");
+    /*system("cls");
 
     cout << "현재 저장된 메뉴" << endl;
     cout << "====================" << endl;
@@ -285,13 +322,19 @@ void menu_change(string* text) {//메뉴 수정하는 함수
     if (cin.get() != '\n') {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
+    }*/
+    int count = 0;
+    for (int i = 0; i < SIZE; i++) {
+        count++;
+        if (text[i + 1] == "\0") {
+            break;
+        }
     }
-
     system("cls");
-    cout << "목록을 선택하세요." << endl;
+    cout << "※목록을 선택하세요." << endl;
     cout << "> 1. 메뉴 추가" << endl;
     cout << "  2. 메뉴 삭제" << endl;
-    cout << "  3. 뒤로 가기" << endl;
+    cout << "  3. 메인 화면" << endl;
     int x2 = 0;
     int y2 = 1;
     int key2;
