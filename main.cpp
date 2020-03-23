@@ -64,7 +64,7 @@ int main() {
 
     string text[SIZE];//메뉴 저장할 배열
     int num = text_stor(text);//메모장에 저장되어있는 개수
-
+    //int num = 0;
     /*cout << "현재 저장된 메뉴" << endl;
     cout << "====================" << endl;
     for (int i = 0; i < SIZE; i++) {//현재 저장된 메뉴 출력
@@ -95,13 +95,14 @@ int main() {
           break;
        }
     }*/
-
+    int food_num = 0;
     for (int i = 0; i < SIZE; i++) {//현재 저장된 메뉴 출력
-
+        food_num++;
         cout << i + 1 << " ) " << text[i] << endl;
         if (text[i + 1] == "\0") {
             break;
         }
+
     }
 
     cout << endl;
@@ -118,7 +119,7 @@ int main() {
 
 
     if (menu_num == 1) {
-        menu_random(text, num);
+        menu_random(text, food_num);
     }
     else if (menu_num == 2) {
         menu_change(text);
@@ -249,11 +250,19 @@ int menu() {
 void menu_random(string* text, int num) {//메뉴 선택해주는 함수
     system("cls");
     srand((unsigned int)time(NULL));
-    int food_menu = rand() % num;
+    int food_menu = rand() % (num);
     //cout << num << endl;
-    cout << food_menu << endl;
+    //cout << food_menu << endl;
     cout << "=================" << endl;
     cout << "오늘의 메뉴는!!" << text[food_menu] << "입니다~~" << endl;
+    cout << "=================" << endl;
+    cout << "Press Enter key" << endl;
+    if (cin.get() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+    system("cls");
+    main();
 }
 
 void menu_change(string* text) {//메뉴 수정하는 함수
@@ -282,7 +291,7 @@ void menu_change(string* text) {//메뉴 수정하는 함수
     cout << "목록을 선택하세요." << endl;
     cout << "> 1. 메뉴 추가" << endl;
     cout << "  2. 메뉴 삭제" << endl;
-    cout << "  3. 메뉴 수정 완료" << endl;
+    cout << "  3. 뒤로 가기" << endl;
     int x2 = 0;
     int y2 = 1;
     int key2;
@@ -337,8 +346,16 @@ void menu_add(string* text, int count) {
 
     string admenu;
     system("cls");
-    cout << "추가할 메뉴를 입력하세요" << endl;
+    cout << "추가할 메뉴를 입력하세요(뒤로 가기 -> q)" << endl;
     cin >> admenu;
+
+    if (!admenu.compare("q") || !admenu.compare("Q")) {//뒤로가기
+        if (cin.get() != '\n') {
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+        }
+        menu_change(text);
+    }
 
     ofstream out("food.txt");
     for (int i = 0; i < count; i++) {
@@ -379,8 +396,17 @@ void menu_sub(string* text, int count) {
     //}
     string del_s;
     string del_s2;
-    cout << "삭제할 메뉴의 번호를 입력하세요." << endl;
+    cout << "삭제할 메뉴의 번호를 입력하세요.(뒤로 가기 -> q)" << endl;
     cin >> del_s;
+
+    if (!del_s.compare("q") || !del_s.compare("Q")) {//뒤로가기
+        if (cin.get() != '\n') {
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+        }
+        menu_change(text);
+    }
+
     int del = atoi(del_s.c_str());
     del_s2 = to_string(del);
     while (1 > del || del > count || (del_s.size() != del_s2.size())) {
