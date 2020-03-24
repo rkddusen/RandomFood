@@ -6,6 +6,7 @@
 #include<cstdlib>
 #include<ctime>
 #include<climits>
+#include<vector>
 
 #define SIZE 100
 #define UP 0
@@ -14,7 +15,8 @@
 
 using namespace std;
 
-int text_stor(string* text);
+//void text_stor(string text[SIZE]);
+void text_stor(vector <vector<string> > &Food);
 int menu();
 int keyControl();
 void gotoxy(int, int);
@@ -75,8 +77,12 @@ int main() {
     }
     system("cls");
 
-    string text[SIZE];//메뉴 저장할 배열
-    int num = text_stor(text);//메모장에 저장되어있는 개수
+    //string text[5][SIZE];//메뉴 저장할 배열
+    //text_stor(*text);
+
+    vector< vector<string> >text(5, vector<string>(SIZE, "0"));
+    text_stor(text);
+
     //int num = 0;
     /*cout << "현재 저장된 메뉴" << endl;
     cout << "====================" << endl;
@@ -108,16 +114,24 @@ int main() {
           break;
        }
     }*/
-    int food_num = 0;
-    for (int i = 0; i < SIZE; i++) {//현재 저장된 메뉴 출력
-        food_num++;
-        cout << i + 1 << " ) " << text[i] << endl;
-        if (text[i + 1] == "\0") {
-            break;
+    /*int food_num = 0;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < SIZE; j++) {//현재 저장된 메뉴 출력
+            food_num++;
+            cout << i + 1 << " ) " << text[i] << endl;
+            if (text[i][j + 1] == "\0") {
+                break;
+            }
+
         }
+    }*/
 
+    for (vector<string> vec : text) {
+        for (string n : vec)
+            cout << n << ", ";
+        cout << endl;
     }
-
+/*
     cout << endl;
     cout << "Press Enter key" << endl;
     if (cin.get() != '\n') {
@@ -132,10 +146,10 @@ int main() {
 
 
     if (menu_num == 1) {
-        menu_random(text, food_num);
+        menu_random(*text, food_num);
     }
     else if (menu_num == 2) {
-        menu_change(text);
+        menu_change(*text);
     }
 
     else if (menu_num == 3) {
@@ -144,29 +158,186 @@ int main() {
 
 
     return 0;
+*/
 }
 
-int text_stor(string* text) {//txt파일에 있는 내용 text배열에 저장
+void text_stor(vector <vector<string> >& text) {
     ifstream readFile;
 
-    readFile.open("food.txt");//food.txt open
-    int num = 0;
+    //KoreanFood
+    readFile.open("KoreanFood.txt");//food.txt open
+    int num_k = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+            text[0][num_k] = str;
+            
+            num_k++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[0][num_k] = "\0";
+
+    //JapaneseFood
+    readFile.open("JapaneseFood.txt");//food.txt open
+    int num_j = 0;
     if (readFile.is_open()) {
         while (!readFile.eof()) {
             string str;
             getline(readFile, str);//한줄씩받아 str에 저장
             //cout << str << endl;
 
-            text[num] = str;//text배열에 하나씩 저장
-            num++;
+            text[1][num_j] = str;//text배열에 하나씩 저장
+            num_j++;
         }
 
         readFile.close();//파일 닫기
     }
-    text[num] = "\0";
+    text[1][num_j] = "\0";
 
-    return num;
+    //ChineseFood
+    readFile.open("ChineseFood.txt");//food.txt open
+    int num_c = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[2][num_c] = str;//text배열에 하나씩 저장
+            num_c++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[2][num_c] = "\0";
+
+    //WesternFood
+    readFile.open("WesternFood.txt");//food.txt open
+    int num_w = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[3][num_w] = str;//text배열에 하나씩 저장
+            num_w++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[3][num_w] = "\0";
+
+    //etc
+    readFile.open("etc.txt");//food.txt open
+    int num_e = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[4][num_e] = str;//text배열에 하나씩 저장
+            num_e++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[4][num_e] = "\0";
 }
+
+/*void text_stor(string text[SIZE]) {//txt파일에 있는 내용 text배열에 저장
+    ifstream readFile;
+
+    //KoreanFood
+    readFile.open("KoreanFood.txt");//food.txt open
+    int num_k = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[0][num_k] = str;//text배열에 하나씩 저장
+            num_k++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[0][num_k] = "\0";
+
+    //JapaneseFood
+    readFile.open("JapaneseFood.txt");//food.txt open
+    int num_j = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[1][num_j] = str;//text배열에 하나씩 저장
+            num_j++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[1][num_j] = "\0";
+
+    //ChineseFood
+    readFile.open("ChineseFood.txt");//food.txt open
+    int num_c = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[2][num_c] = str;//text배열에 하나씩 저장
+            num_c++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[2][num_c] = "\0";
+
+    //WesternFood
+    readFile.open("WesternFood.txt");//food.txt open
+    int num_w = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[3][num_w] = str;//text배열에 하나씩 저장
+            num_w++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[3][num_w] = "\0";
+
+    //etc
+    readFile.open("etc.txt");//food.txt open
+    int num_e = 0;
+    if (readFile.is_open()) {
+        while (!readFile.eof()) {
+            string str;
+            getline(readFile, str);//한줄씩받아 str에 저장
+            //cout << str << endl;
+
+            text[4][num_e] = str;//text배열에 하나씩 저장
+            num_e++;
+        }
+
+        readFile.close();//파일 닫기
+    }
+    text[4][num_e] = "\0";
+}*/
 
 int keyControl() {
     int temp = _getch();
