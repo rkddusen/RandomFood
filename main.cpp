@@ -269,6 +269,9 @@ int keyControl() {
 	else if (temp == '\r') {
 		return SPACE;
 	}
+	else
+		return 3;
+	
 }
 
 void gotoxy(int x, int y) {
@@ -362,6 +365,8 @@ int menu() {
 			//}
 
 			return y;
+		case 3:
+			continue;
 		}
 	} while (key != SPACE);
 }
